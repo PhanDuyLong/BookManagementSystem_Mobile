@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          backgroundColor: Color(0xffeeeeee),
           appBar: AppBar(
             title: Text("Book library"),
           ),
@@ -42,7 +43,7 @@ class _BookListComponentState extends State<BookListComponent> {
     double maxScroll = controller.position.maxScrollExtent;
     double currentScroll = controller.position.pixels;
 
-    if(currentScroll == maxScroll) bloc!.add(BookEvent());
+    if (currentScroll == maxScroll) bloc!.add(BookEvent());
   }
 
   @override
@@ -50,39 +51,38 @@ class _BookListComponentState extends State<BookListComponent> {
     // final size = MediaQuery.of(context).size;
     bloc = BlocProvider.of(context);
     controller.addListener(onScroll);
-    return Container(
-        margin: EdgeInsets.all(20),
-        child: BlocBuilder<BookBloc, BookState>(
-          builder: (context, state) {
-            if (state is BookUninitialized)
-              return Center(
-                child: SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            else {
-              BookLoaded bookLoaded = state as BookLoaded;
-              return ListView.builder(
-                controller: controller,
-                  itemCount: (bookLoaded.hasReachedMax ?? false)
-                      ? bookLoaded.books!.length
-                      : bookLoaded.books!.length + 1,
-                  itemBuilder: (context, index) =>
-                      (index < bookLoaded.books!.length)
-                          ? BookItem(book: bookLoaded.books![index])
-                          : Container(
-                            child: Center(
-                              child: SizedBox(
-                                  width: 30,
-                                  height: 30,
-                                  child: CircularProgressIndicator(),
-                                ),
+    return Container(child: BlocBuilder<BookBloc, BookState>(
+      builder: (context, state) {
+        if (state is BookUninitialized)
+          return Center(
+            child: SizedBox(
+              width: 30,
+              height: 30,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        else {
+          BookLoaded bookLoaded = state as BookLoaded;
+          return ListView.builder(
+              padding: EdgeInsets.all(20),
+              controller: controller,
+              itemCount: (bookLoaded.hasReachedMax ?? false)
+                  ? bookLoaded.books!.length
+                  : bookLoaded.books!.length + 1,
+              itemBuilder: (context, index) =>
+                  (index < bookLoaded.books!.length)
+                      ? BookItem(book: bookLoaded.books![index])
+                      : Container(
+                          child: Center(
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(),
                             ),
-                          ));
-            }
-          },
-        ));
+                          ),
+                        ));
+        }
+      },
+    ));
   }
 }

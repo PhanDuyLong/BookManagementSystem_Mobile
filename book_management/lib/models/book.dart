@@ -3,6 +3,7 @@ class Book {
   final String? name;
   final String? author;
   final int? categoryId;
+  final String? category;
   final DateTime? publishedDate;
   final bool? status;
 
@@ -11,6 +12,7 @@ class Book {
       this.name,
       this.author,
       this.categoryId,
+      this.category,
       this.publishedDate,
       this.status});
 
@@ -20,6 +22,7 @@ class Book {
       name: json['name'],
       author: json['author'],
       categoryId: json['categoryId'],
+      category: json['category'],
       publishedDate: json['publishedDate'],
       status: json['status'],
     );
