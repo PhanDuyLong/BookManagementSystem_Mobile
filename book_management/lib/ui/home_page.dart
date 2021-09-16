@@ -11,13 +11,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Icon cosIcon = Icon(Icons.search);
+  Widget searchBar = Text("Book library");
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           backgroundColor: Color(0xffeeeeee),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {},
+          ),
           appBar: AppBar(
-            title: Text("Book library"),
+            title: searchBar,
+            actions: [
+              IconButton(
+                icon: this.cosIcon,
+                onPressed: () {
+                  setState(() {
+                    if (this.cosIcon.icon == Icons.search) {
+                      this.cosIcon = Icon(Icons.cancel);
+                      this.searchBar = TextField();
+                    }
+                    else {
+                      this.cosIcon = Icon(Icons.search);
+                      this.searchBar = Text("Book library");
+                    }
+                  });
+                },
+              ),
+            ],
           ),
           body: BlocProvider<BookBloc>(
             create: (context) =>
