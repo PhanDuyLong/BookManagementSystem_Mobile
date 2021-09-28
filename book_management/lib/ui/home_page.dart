@@ -1,4 +1,4 @@
-import 'package:book_management/blocs/book_bloc.dart';
+import 'package:book_management/blocs/book_list/book_list_bloc.dart';
 import 'package:book_management/component/book_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

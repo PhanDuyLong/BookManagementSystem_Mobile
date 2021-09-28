@@ -66,4 +66,12 @@ class BookApiProvider {
       throw Exception('Failed to load post');
     }
   }
+
+  Future<Book> getBook(int? id) async {
+    final books = initBook();
+    Book book = Book();
+    if(id != null)
+    book = books[id];
+    return book;
+  }
 }
