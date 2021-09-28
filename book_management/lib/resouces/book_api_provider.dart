@@ -55,7 +55,7 @@ class BookApiProvider {
       return [];
     }
     int count = from + to;
-    if (count < books.length)
+    if (count > books.length)
     count = books.length;
     for (int i = from; i < count ; i++) {
       booksPaging.add(books[i]);

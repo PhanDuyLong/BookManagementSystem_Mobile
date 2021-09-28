@@ -1,7 +1,11 @@
+import 'package:book_management/blocs/book_form/book_form_bloc.dart';
+import 'package:book_management/blocs/book_form/book_form_evet.dart';
+import 'package:book_management/blocs/book_list/book_list_bloc.dart';
 import 'package:book_management/models/book.dart';
 import 'package:book_management/ui/update_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookItem extends StatelessWidget {
   final Book book;
@@ -9,18 +13,27 @@ class BookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BookListBloc bookBloc = BlocProvider.of<BookListBloc>(context);
+    BookFormBloc bookFormBloc = BlocProvider.of<BookFormBloc>(context);
     return Container(
       margin: EdgeInsets.only(bottom: 10),
       child: Material(
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => UpdateBookPage(
-                        bookId: book.id,
-                      )),
+            Navigator.of(context).push(
+              MaterialPageRoute<UpdateBook>(
+                builder: (context) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider<BookFormBloc>.value(
+                          value: bookFormBloc..add(GetBook(book: book))),
+                      BlocProvider<BookListBloc>.value(value: bookBloc),
+                    ],
+                    child: UpdateBookPage(bookId: book.id),
+                  );
+                },
+              ),
             );
           },
           child: Row(
