@@ -37,6 +37,8 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {},
         ),
         appBar: AppBar(
+          centerTitle: true,
+          leading: SizedBox(),
           title: searchBar,
           actions: [
             IconButton(

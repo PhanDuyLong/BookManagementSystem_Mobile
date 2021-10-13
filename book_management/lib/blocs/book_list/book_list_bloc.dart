@@ -10,9 +10,6 @@ class BookListBloc extends Bloc<BookListEvent, BookListState> {
   @override
   Stream<BookListState> mapEventToState(BookListEvent event) async* {
     List<Book> books;
-
-    // yield Loading();
-
     if (event is GetBooks) {
       try {
         if (state is InitialBookListState) {
